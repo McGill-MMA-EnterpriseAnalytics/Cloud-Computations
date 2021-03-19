@@ -35,6 +35,16 @@ def load_data():
     wind_direction=load_csv(wind_direction_url)
     wind_speed_url="https://drive.google.com/file/d/1zYkIQtKO34UEILfNeIpPCnfIwCtZcmzD/view?usp=sharing"
     wind_speed=load_csv(wind_speed_url)
+    
+    city.columns="city"+city.columns
+    weather_desc.columns="weather"+weather_desc.columns
+    humidity.columns="humidity"+humidity.columns
+    pressure.columns="pressure"+pressure.columns
+    temp.columns="temp"+temp.columns
+    wind_direction.columns="wind_direction"+wind_direction.columns
+    wind_speed.columns="wind_speed"+wind_speed.columns
+    data=pd.concat([city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed],axis=1)
+    montreal=data[data.columns[data.columns.str.contains("Montreal|citydate")]]
     return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed)
 
 
