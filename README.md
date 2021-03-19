@@ -1,6 +1,6 @@
 ## Weather Prediction
 
-**Richard Gao, Jake Hogan, Steven Liang, Hanna Swail, & Duncan Wang **
+**Richard Gao, Jake Hogan, Steven Liang, Hanna Swail, & Duncan Wang**
 
 The ability to produce accurate weather forecasts remains a crucial social and economic priority, with benefits cascading across sectors including transportation, tourism, and agriculture. The US Weather Service estimates that investment in public weather forecasts has an annualized benefit of over $31 billion (Lazo et al. 2009).
 
