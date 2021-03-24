@@ -60,3 +60,15 @@ def api(city):
     weather.columns='weather.'+weather.columns
     final_data=pd.concat([data[data.columns[1:len(data.columns)]],weather],axis=1)
     return(final_data)
+
+
+##########NEW##########
+#takes the montreal df as input and imputes the columns
+def impute(df = montreal):
+  df = df.drop(0) #dropping first row of nulls
+
+  for col in list(df.drop(['citydatetime', 'weatherMontreal'], axis = 1).columns): #run iterative imputer on each column
+    imp = IterativeImputer(random_state = 6)
+    df[[col]] = imp.fit_transform(df[[col]])
+
+  return df
