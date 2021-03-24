@@ -45,7 +45,7 @@ def load_data():
     wind_speed.columns="wind_speed"+wind_speed.columns
     data=pd.concat([city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed],axis=1)
     montreal=data[data.columns[data.columns.str.contains("Montreal|citydate")]]
-    return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed)
+    return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed,montreal)
 
 
 def api(city):
