@@ -73,3 +73,48 @@ def impute(df = montreal):
     df[[col]] = imp.fit_transform(df[[col]])
 
   return df
+
+#NEW - preprocessing for the description weather column
+def clean_description(df):
+    #too much detail, simplifying a bit and cleaning/standarizing word notation
+    df['weather_desc'] = df['weather_desc'].str.replace(' with ', ' ')
+    df['weather_desc'] = df['weather_desc'].str.replace(' and ', ' ')
+    df['weather_desc'] = df['weather_desc'].str.replace('proximity ', '')
+    df['weather_desc'] = df['weather_desc'].str.replace('light intensity', 'light')
+    df['weather_desc'] = df['weather_desc'].str.replace('heavy intensity', 'heavy')
+    df['weather_desc'] = df['weather_desc'].str.replace('very heavy', 'heavy')
+
+    #exceptions / categories that the same
+    df['weather_desc'] = df['weather_desc'].str.replace('light drizzle rain', 'light rain')
+    df['weather_desc'] = df['weather_desc'].str.replace('light drizzle', 'light rain')
+    df['weather_desc'] = df['weather_desc'].str.replace('drizzle', 'light rain')
+    df['weather_desc'] = df['weather_desc'].str.replace('sleet', 'snow')
+    df['weather_desc'] = df['weather_desc'].str.replace('freezing', 'snow')
+    df['weather_desc'] = df['weather_desc'].str.replace('sand', 'other')
+    df['weather_desc'] = df['weather_desc'].str.replace('dust', 'other')
+    df['weather_desc'] = df['weather_desc'].str.replace('smoke', 'other')
+
+    #standarizing intensity values
+    df['weather_desc'] = df['weather_desc'].str.replace('few', 'light ')
+    df['weather_desc'] = df['weather_desc'].str.replace('broken', 'moderate ')
+    df['weather_desc'] = df['weather_desc'].str.replace('scattered', 'moderate ')
+    df['weather_desc'] = df['weather_desc'].str.replace('overcast ', 'heavy ')
+    
+    #multi-categorical dummification
+    tags = ['clouds','rain','mist','snow','shower','thunderstorm','fog','other']
+
+    for i in range(len(tags)):
+        df[tags[i]]=0
+        df.loc[df['weather_desc'].str.contains(pat=tags[i])==True, tags[i]] = 1
+        
+    #creating a weather intensity column
+    intensity_values=['sky is clear','light','moderate','heavy']    
+
+    for i in range(len(intensity_values)):
+        df.loc[df['weather_desc'].str.contains(pat =intensity_values[i])==True, 'Intensity'] = i
+
+
+    #fill in the blanks with moderate
+    df['Intensity']=df['Intensity'].fillna(2)
+    
+    return df
