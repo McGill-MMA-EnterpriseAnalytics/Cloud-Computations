@@ -18,7 +18,7 @@ def load_csv(url):
     dfs = pd.read_csv(file_id,error_bad_lines=False)
     return(dfs)
 
-def load_data(city="Montreal"):
+def load_data(cityname="Montreal"):
     city_url="https://drive.google.com/file/d/1zYkIQtKO34UEILfNeIpPCnfIwCtZcmzD/view?usp=sharing"
     city=load_csv(city_url)
     weather_desc_url="https://drive.google.com/file/d/1-9uMFJnLZSJLdyZeST6G2AArtR--yMJa/view?usp=sharing"
@@ -42,10 +42,10 @@ def load_data(city="Montreal"):
     wind_direction.columns="wind_direction"+wind_direction.columns
     wind_speed.columns="wind_speed"+wind_speed.columns
     data=pd.concat([city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed],axis=1)
-    allcitydata=data[data.columns[data.columns.str.contains(city+"|citydate")]]
+    allcitydata=data[data.columns[data.columns.str.contains(cityname+"|citydate")]]
     allcitydata.columns= ['datetime','city','Description','Humidity','Wind Direction','Temperature','Pressure','Wind Speed']
     allcitydata=allcitydata.dropna().reset_index(drop=True)
-    allcitydata = allcitydata.drop("city",axis=1)
+    #allcitydata = allcitydata.drop("city",axis=1)
     return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed,allcitydata)
 
 
@@ -68,7 +68,7 @@ def api(city):
 def impute(df):
   df = df.drop(0) #dropping first row of nulls
 
-  for col in list(df.drop(['citydatetime', 'weatherMontreal'], axis = 1).columns): #run iterative imputer on each column
+  for col in list(df.drop(['datetime', 'Description'], axis = 1).columns): #run iterative imputer on each column
     imp = IterativeImputer(random_state = 6)
     df[[col]] = imp.fit_transform(df[[col]])
 
