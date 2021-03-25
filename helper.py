@@ -13,25 +13,25 @@ from sklearn.impute import IterativeImputer
     
 ssl._create_default_https_context = ssl._create_unverified_context
 def load_csv(url):
-    orig_url=url
-    file_id = 'https://drive.google.com/uc?export=download&id='+orig_url.split('/')[-2]
+    #orig_url=url
+    file_id = url#'https://drive.google.com/uc?export=download&id='+orig_url.split('/')[-2]
     dfs = pd.read_csv(file_id,error_bad_lines=False)
     return(dfs)
 
 def load_data(cityname="Montreal"):
-    city_url="https://drive.google.com/file/d/1zYkIQtKO34UEILfNeIpPCnfIwCtZcmzD/view?usp=sharing"
+    city_url="https://enterprisemcgill.s3.amazonaws.com/city_attributes.csv"
     city=load_csv(city_url)
-    weather_desc_url="https://drive.google.com/file/d/1-9uMFJnLZSJLdyZeST6G2AArtR--yMJa/view?usp=sharing"
+    weather_desc_url="https://enterprisemcgill.s3.amazonaws.com/weather_description.csv"
     weather_desc=load_csv(weather_desc_url)
-    humidity_url="https://drive.google.com/file/d/1-38LryQSt16wh4JXteC049sHWYqoyc3d/view?usp=sharing"
+    humidity_url="https://enterprisemcgill.s3.amazonaws.com/humidity.csv"
     humidity=load_csv(humidity_url)
-    pressure_url="https://drive.google.com/file/d/1-1ZCUKvf6LE7BBQnchnBk4U5Q0qO58IY/view?usp=sharing"
+    pressure_url="https://enterprisemcgill.s3.amazonaws.com/pressure.csv"
     pressure=load_csv(pressure_url)
-    temp_url="https://drive.google.com/file/d/1-2CRHi_OnqQwxEIrH06giexBEwkFKHjt/view?usp=sharing"
+    temp_url="https://enterprisemcgill.s3.amazonaws.com/temp.csv"
     temp=load_csv(temp_url)
-    wind_direction_url="https://drive.google.com/file/d/1AeCMKxwX-gDnOQOyYJvBTreU0lFvf-yi/view?usp=sharing"
+    wind_direction_url="https://enterprisemcgill.s3.amazonaws.com/wind_direction.csv"
     wind_direction=load_csv(wind_direction_url)
-    wind_speed_url="https://drive.google.com/file/d/1zYkIQtKO34UEILfNeIpPCnfIwCtZcmzD/view?usp=sharing"
+    wind_speed_url="https://enterprisemcgill.s3.amazonaws.com/wind_speed.csv"
     wind_speed=load_csv(wind_speed_url)
     
     city.columns="city"+city.columns
@@ -42,9 +42,9 @@ def load_data(cityname="Montreal"):
     wind_direction.columns="wind_direction"+wind_direction.columns
     wind_speed.columns="wind_speed"+wind_speed.columns
     data=pd.concat([city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed],axis=1)
-    allcitydata=data[data.columns[data.columns.str.contains(cityname+"|citydate")]]
-    allcitydata.columns= ['datetime','city','Description','Humidity','Wind Direction','Temperature','Pressure','Wind Speed']
-    allcitydata=allcitydata.dropna().reset_index(drop=True)
+    allcitydata=data[data.columns[data.columns.str.contains(cityname+"|weatherdate")]]
+    allcitydata.columns= ['datetime','Description','Humidity','Wind Direction','Temperature','Pressure','Wind Speed']
+
     #allcitydata = allcitydata.drop("city",axis=1)
     return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed,allcitydata)
 
@@ -62,6 +62,11 @@ def api(city):
     final_data=pd.concat([data[data.columns[1:len(data.columns)]],weather],axis=1)
     return(final_data)
 
+def load_and_preprocess(cityname="Montreal"):
+    city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed,montreal = load_data(cityname=cityname)
+    montreal=impute(montreal)
+    montreal=clean_description(montreal)
+    return(montreal)
 
 ##########NEW##########
 #takes the montreal df as input and imputes the columns
