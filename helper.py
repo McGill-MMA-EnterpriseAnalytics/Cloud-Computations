@@ -13,6 +13,8 @@ from pprint import pprint
 import requests
 import os
 from pandas import json_normalize 
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
     
 ssl._create_default_https_context = ssl._create_unverified_context
 def load_csv(url):
