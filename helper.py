@@ -65,7 +65,7 @@ def api(city):
 
 ##########NEW##########
 #takes the montreal df as input and imputes the columns
-def impute(df = montreal):
+def impute(df):
   df = df.drop(0) #dropping first row of nulls
 
   for col in list(df.drop(['citydatetime', 'weatherMontreal'], axis = 1).columns): #run iterative imputer on each column
