@@ -3,11 +3,6 @@ import pandas as pd
 import requests
 from io import StringIO
 import ssl
-from pandas_profiling import ProfileReport
-import streamlit as st
-import streamlit.components.v1 as components
-import plotly.express as px
-import plotly.figure_factory as ff
 import json
 from pprint import pprint
 import requests
@@ -23,7 +18,7 @@ def load_csv(url):
     dfs = pd.read_csv(file_id,error_bad_lines=False)
     return(dfs)
 
-def load_data():
+def load_data(city="Montreal"):
     city_url="https://drive.google.com/file/d/1zYkIQtKO34UEILfNeIpPCnfIwCtZcmzD/view?usp=sharing"
     city=load_csv(city_url)
     weather_desc_url="https://drive.google.com/file/d/1-9uMFJnLZSJLdyZeST6G2AArtR--yMJa/view?usp=sharing"
@@ -47,8 +42,11 @@ def load_data():
     wind_direction.columns="wind_direction"+wind_direction.columns
     wind_speed.columns="wind_speed"+wind_speed.columns
     data=pd.concat([city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed],axis=1)
-    montreal=data[data.columns[data.columns.str.contains("Montreal|citydate")]]
-    return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed,montreal)
+    allcitydata=data[data.columns[data.columns.str.contains(city+"|citydate")]]
+    allcitydata.columns= ['datetime','city','Description','Humidity','Wind Direction','Temperature','Pressure','Wind Speed']
+    allcitydata=allcitydata.dropna().reset_index(drop=True)
+    allcitydata = allcitydata.drop("city",axis=1)
+    return(city,weather_desc,humidity,pressure,temp,wind_direction,wind_speed,allcitydata)
 
 
 def api(city):
@@ -79,44 +77,45 @@ def impute(df):
 #NEW - preprocessing for the description weather column
 def clean_description(df):
     #too much detail, simplifying a bit and cleaning/standarizing word notation
-    df['weather_desc'] = df['weather_desc'].str.replace(' with ', ' ')
-    df['weather_desc'] = df['weather_desc'].str.replace(' and ', ' ')
-    df['weather_desc'] = df['weather_desc'].str.replace('proximity ', '')
-    df['weather_desc'] = df['weather_desc'].str.replace('light intensity', 'light')
-    df['weather_desc'] = df['weather_desc'].str.replace('heavy intensity', 'heavy')
-    df['weather_desc'] = df['weather_desc'].str.replace('very heavy', 'heavy')
+    df['Description'] = df['Description'].str.replace(' with ', ' ')
+    df['Description'] = df['Description'].str.replace(' and ', ' ')
+    df['Description'] = df['Description'].str.replace('proximity ', '')
+    df['Description'] = df['Description'].str.replace('light intensity', 'light')
+    df['Description'] = df['Description'].str.replace('heavy intensity', 'heavy')
+    df['Description'] = df['Description'].str.replace('very heavy', 'heavy')
 
     #exceptions / categories that the same
-    df['weather_desc'] = df['weather_desc'].str.replace('light drizzle rain', 'light rain')
-    df['weather_desc'] = df['weather_desc'].str.replace('light drizzle', 'light rain')
-    df['weather_desc'] = df['weather_desc'].str.replace('drizzle', 'light rain')
-    df['weather_desc'] = df['weather_desc'].str.replace('sleet', 'snow')
-    df['weather_desc'] = df['weather_desc'].str.replace('freezing', 'snow')
-    df['weather_desc'] = df['weather_desc'].str.replace('sand', 'other')
-    df['weather_desc'] = df['weather_desc'].str.replace('dust', 'other')
-    df['weather_desc'] = df['weather_desc'].str.replace('smoke', 'other')
+    df['Description'] = df['Description'].str.replace('light drizzle rain', 'light rain')
+    df['Description'] = df['Description'].str.replace('light drizzle', 'light rain')
+    df['Description'] = df['Description'].str.replace('drizzle', 'light rain')
+    df['Description'] = df['Description'].str.replace('sleet', 'snow')
+    df['Description'] = df['Description'].str.replace('freezing', 'snow')
+    df['Description'] = df['Description'].str.replace('sand', 'other')
+    df['Description'] = df['Description'].str.replace('dust', 'other')
+    df['Description'] = df['Description'].str.replace('smoke', 'other')
 
     #standarizing intensity values
-    df['weather_desc'] = df['weather_desc'].str.replace('few', 'light ')
-    df['weather_desc'] = df['weather_desc'].str.replace('broken', 'moderate ')
-    df['weather_desc'] = df['weather_desc'].str.replace('scattered', 'moderate ')
-    df['weather_desc'] = df['weather_desc'].str.replace('overcast ', 'heavy ')
+    df['Description'] = df['Description'].str.replace('few', 'light ')
+    df['Description'] = df['Description'].str.replace('broken', 'moderate ')
+    df['Description'] = df['Description'].str.replace('scattered', 'moderate ')
+    df['Description'] = df['Description'].str.replace('overcast ', 'heavy ')
     
     #multi-categorical dummification
     tags = ['clouds','rain','mist','snow','shower','thunderstorm','fog','other']
 
     for i in range(len(tags)):
         df[tags[i]]=0
-        df.loc[df['weather_desc'].str.contains(pat=tags[i])==True, tags[i]] = 1
+        df.loc[df['Description'].str.contains(pat=tags[i])==True, tags[i]] = 1
         
     #creating a weather intensity column
     intensity_values=['sky is clear','light','moderate','heavy']    
 
     for i in range(len(intensity_values)):
-        df.loc[df['weather_desc'].str.contains(pat =intensity_values[i])==True, 'Intensity'] = i
+        df.loc[df['Description'].str.contains(pat =intensity_values[i])==True, 'Intensity'] = i
 
 
     #fill in the blanks with moderate
     df['Intensity']=df['Intensity'].fillna(2)
     
     return df
+
