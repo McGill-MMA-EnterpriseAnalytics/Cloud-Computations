@@ -79,7 +79,7 @@ def impute(df):
 
   return df
 
-#NEW - preprocessing for the description weather column
+#NEW - preprocessing for the description weather column - from Steven
 def clean_description(df):
     #too much detail, simplifying a bit and cleaning/standarizing word notation
     df['Description'] = df['Description'].str.replace(' with ', ' ')
