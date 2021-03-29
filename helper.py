@@ -263,7 +263,8 @@ def feature_engineer_important(df):
                           'mean weekly temp', 
                           'rolling_mean_temp', 
                           'rolling_mean_pressure', 
-                          'rolling_mean_wind_speed']
+                          'rolling_mean_wind_speed', 
+                          'Temperature']
     df = df[important_features] #only return the top 15 most important features
     
     return(df)
