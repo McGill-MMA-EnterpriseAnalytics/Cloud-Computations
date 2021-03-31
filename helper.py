@@ -140,7 +140,16 @@ def feature_engineer(df): #implementing Hanna's features in a function
     df['quarter start'] = df['datetime'].dt.is_quarter_start
     df['quarter end'] = df['datetime'].dt.is_quarter_end
 
+    #lag features from Duncan
     df = df.set_index('datetime')
+    df['lag1'] = df['Temperature'].shift(periods = 1, fill_value = 0)
+    df['lag2'] = df['Temperature'].shift(periods = 2, fill_value = 0)
+    df['lag12'] = df['Temperature'].shift(periods = 12, fill_value = 0)
+    df['lag30'] = df['Temperature'].shift(periods = 30, fill_value = 0)
+
+    #we have to eliminate all those with 0s
+    df = df[df['lag30'] != 0]
+
     df['max daily temp']=df.resample('D')['Temperature'].transform('max')
     df['max daily temp']=df['max daily temp'].shift(24)
     df['max daily hum']=df.resample('D')['Humidity'].transform('max')
@@ -249,22 +258,22 @@ def feature_engineer(df): #implementing Hanna's features in a function
 def feature_engineer_important(df):
     df = feature_engineer(df) #create new features using above
     
-    important_features = ['Humidity', 
-                          'Wind Direction', 
-                          'Pressure',
-                          'hour',
-                          'week',
-                          'max daily temp',
-                          'min daily temp',
-                          'min daily hum', 
-                          'min weekly temp',
-                          'mean daily temp', 
-                          'mean daily pressure', 
-                          'mean weekly temp', 
-                          'rolling_mean_temp', 
-                          'rolling_mean_pressure', 
-                          'rolling_mean_wind_speed', 
-                          'Temperature']
+    # perform feature selection
+    rfe = RFE(DecisionTreeRegressor(random_state=1), n_features_to_select=20)
+    fit = rfe.fit(X, y)
+    
+    df = df.dropna()
+    # split into input and output
+    X = df.drop('Temperature',axis=1)
+    X = X.drop('Description',axis=1)
+    y = df['Temperature']
+    
+    important_features = []
+    
+    for i in range(len(fit.support_)):
+        if fit.support_[i]:
+            important_features.append((names[i]))
+    
     df = df[important_features] #only return the top 15 most important features
     
     return(df)
