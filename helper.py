@@ -277,3 +277,29 @@ def feature_engineer_important(df):
     df = df[important_features] #only return the top 15 most important features
     
     return(df)
+
+
+def split(sequence, n_timestamp):
+    X, y = [], []
+    
+    for i in range(len(sequence)):
+        end = i + n_timestamp
+        if end > len(sequence)-1:
+            break
+        sequence_x, sequence_y = sequence[i:end], sequence[end]
+        X.append(sequence_x)
+        y.append(sequence_y)
+    return np.array(X), np.array(y)
+
+
+def split_multiple(sequence, n_timestamp, target):
+    X, y = [], []
+    
+    for i in range(len(sequence)):
+        end = i + n_timestamp
+        if end > len(sequence)-1:
+            break
+        sequence_x, sequence_y = sequence[i:end], target[end]
+        X.append(sequence_x)
+        y.append(sequence_y)
+    return np.array(X), np.array(y)
