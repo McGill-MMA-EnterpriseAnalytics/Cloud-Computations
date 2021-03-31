@@ -1,5 +1,6 @@
 #import libraries
 import pandas as pd
+import numpy as np
 import requests
 from io import StringIO
 import ssl
@@ -11,6 +12,8 @@ from pandas import json_normalize
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from datetime import datetime
+from sklearn.feature_selection import RFE
+from sklearn.tree import DecisionTreeRegressor
     
 ssl._create_default_https_context = ssl._create_unverified_context
 def load_csv(url):
@@ -258,23 +261,23 @@ def feature_engineer(df): #implementing Hanna's features in a function
 def feature_engineer_important(df):
     df = feature_engineer(df) #create new features using above
     
-    # perform feature selection
-    rfe = RFE(DecisionTreeRegressor(random_state=1), n_features_to_select=20)
-    fit = rfe.fit(X, y)
-    
     df = df.dropna()
     # split into input and output
     X = df.drop('Temperature',axis=1)
     X = X.drop('Description',axis=1)
     y = df['Temperature']
     
-    important_features = []
+    # perform feature selection
+    rfe = RFE(DecisionTreeRegressor(random_state=1), n_features_to_select=20)
+    fit = rfe.fit(X, y)
     
+    important_features = []
+    names = X.columns
     for i in range(len(fit.support_)):
         if fit.support_[i]:
             important_features.append((names[i]))
     
-    df = df[important_features] #only return the top 15 most important features
+    df = df[important_features+['Temperature']] #only return the top 15 most important features
     
     return(df)
 
