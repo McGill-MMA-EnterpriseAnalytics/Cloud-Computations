@@ -102,7 +102,9 @@ def main(file_name, model_name):
     import pickle
     print("DONE")
     pickle.dump(xgb_model, open("../../models/"+model_name+".pkl", 'wb'))
-    pickle.dump(xgb_model, open("../../models/"+model_name+"transformer.pkl", 'wb'))
+    pickle.dump(scaler, open("../../models/"+model_name+"transformer.pkl", 'wb'))
+    pickle.dump(xgb_model, open(model_name+".pkl", 'wb'))
+    pickle.dump(scaler, open(model_name+"transformer.pkl", 'wb'))
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
