@@ -1,6 +1,6 @@
 {
     "command": "/opt/anaconda3/bin/ludwig experiment --dataset temperature_ludwig.csv --config_file config.yaml",
-    "commit_hash": "432035164631",
+    "commit_hash": "e3ca13aaa2d9",
     "config": {
         "combiner": {
             "type": "concat"
