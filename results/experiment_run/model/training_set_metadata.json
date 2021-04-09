@@ -1,0 +1,25 @@
+{
+    "checksum": "sdUQozJFOiz6RbKHTQsLGA==",
+    "data_processed_cache_dir": "/var/folders/5b/my8tsbx13y130zmsxpx515vw0000gn/T/tmpd7x8kmo7/4e8330d8-98d6-11eb-a2e4-acde48001122",
+    "data_train_hdf5_fp": "temperature_ludwig.hdf5",
+    "temperature": {
+        "preprocessing": {
+            "computed_fill_value": 0,
+            "fill_value": 0,
+            "missing_value_strategy": "fill_with_const",
+            "normalization": null
+        }
+    },
+    "temperature_feature": {
+        "max_timeseries_length": 20,
+        "preprocessing": {
+            "computed_fill_value": "",
+            "fill_value": "",
+            "missing_value_strategy": "fill_with_const",
+            "padding": "right",
+            "padding_value": 0,
+            "timeseries_length_limit": 256,
+            "tokenizer": "space"
+        }
+    }
+}
