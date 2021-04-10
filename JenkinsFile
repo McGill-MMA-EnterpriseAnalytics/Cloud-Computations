@@ -4,6 +4,9 @@ pipeline{
     stages {
 
         stage('build') {
+            when {
+                branch 'Docker'
+            }
             steps {
                 python ./Cloud-Computations/Unit_tests/tests.py
                 sh 'test_deploy.sh'
