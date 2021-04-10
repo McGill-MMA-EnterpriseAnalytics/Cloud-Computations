@@ -24,12 +24,15 @@ RUN apt-get update
 RUN apt-get install -y git
 # Create a directory and clone git code
 RUN git clone -b Docker https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations.git
+# RUN python /app/Cloud-Computations/Cloud-Computations/src/models/train_model.py "Montreal.csv" "Montreal"
 
 COPY requirements.txt /tmp/
 COPY ./Cloud-Computations /app
 RUN pip install -r /tmp/requirements.txt
 RUN pip install fastapi uvicorn
 WORKDIR "/app/src/models"
+RUN python train_model.py "Montreal.csv" "Montreal"
+
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--reload"]
 

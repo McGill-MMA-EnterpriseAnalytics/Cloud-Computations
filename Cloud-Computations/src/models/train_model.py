@@ -19,6 +19,8 @@ import click
 import logging
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
+import mlflow
+import mlflow.sklearn
 
 
 cwd = os.getcwd()
@@ -83,7 +85,7 @@ def main(file_name, model_name):
 
     X_test_scaled = scaler.transform(X_test)
     X_test = pd.DataFrame(X_test_scaled)
-
+    # with mlflow.start_run():
     import xgboost as xgb
 
     xgb_model = xgb.XGBRegressor(n_estimators=1000)

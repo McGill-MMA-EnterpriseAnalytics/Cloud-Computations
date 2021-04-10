@@ -1,0 +1,19 @@
+Jenkinsfile (Declarative Pipeline)
+pipeline{
+    agent any
+    stages {
+
+        stage('build') {
+            steps {
+                python ./Cloud-Computations/Unit_tests/tests.py
+                sh 'test_deploy.sh'
+
+            }
+        }
+
+    }
+
+
+
+
+}
