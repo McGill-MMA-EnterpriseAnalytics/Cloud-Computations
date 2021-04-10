@@ -20,11 +20,12 @@ import logging
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 import mlflow
-import mlflow.sklearn
-
+import mlflow.xgboost
+from urllib.parse import urlparse
 
 cwd = os.getcwd()
 os_type = pf.system()
+mlflow.set_tracking_uri("http://localhost:5000")
 
 
 
@@ -32,14 +33,15 @@ def train_test_split(data, n_test):
     return data[:n_test], data[n_test:]
 
 def get_data(filename):
-    df = pd.read_csv('../../data/processed/'+filename)
+    df = pd.read_csv('../data/processed/'+filename)
     return(df)
 
 @click.command()
 # @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('file_name', type=click.STRING)
 @click.argument('model_name', type=click.STRING)
-def main(file_name, model_name):
+@click.argument('mlflow_log',type=click.STRING)
+def main(file_name, model_name,mlflow_log):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -85,28 +87,68 @@ def main(file_name, model_name):
 
     X_test_scaled = scaler.transform(X_test)
     X_test = pd.DataFrame(X_test_scaled)
-    # with mlflow.start_run():
-    import xgboost as xgb
+    if(mlflow_log == "True"):
+        with mlflow.start_run():
+            import xgboost as xgb
 
-    xgb_model = xgb.XGBRegressor(n_estimators=1000)
-    xgb_model.fit(X_train, y_train,
-                  eval_set=[(X_train, y_train), (X_test, y_test)],
-                  early_stopping_rounds=50,
-                  verbose=False)
-    pred = xgb_model.predict(X_test)
-    ts_results = pd.DataFrame({'Predicted': pred, 'Observed': y_test['Temperature']})
-    ts_results[ts_results['Predicted'] <= 0] = 0
-    ts_results['RMSE'] = np.sqrt((ts_results['Predicted'] - ts_results['Observed']) ** 2)
-    ts_results['RMSE'].mean()
+            xgb_model = xgb.XGBRegressor(n_estimators=1000)
+            xgb_model.fit(X_train, y_train,
+                          eval_set=[(X_train, y_train), (X_test, y_test)],
+                          early_stopping_rounds=50,
+                          verbose=False)
+            pred = xgb_model.predict(X_test)
+            ts_results = pd.DataFrame({'Predicted': pred, 'Observed': y_test['Temperature']})
+            ts_results[ts_results['Predicted'] <= 0] = 0
+            ts_results['RMSE'] = np.sqrt((ts_results['Predicted'] - ts_results['Observed']) ** 2)
+            mean_rmse=ts_results['RMSE'].mean()
 
-    logger.info('RMSE:' + str(ts_results['RMSE'].mean()))
+            logger.info('RMSE:' + str(ts_results['RMSE'].mean()))
 
-    import pickle
-    print("DONE")
-    pickle.dump(xgb_model, open("../../models/"+model_name+".pkl", 'wb'))
-    pickle.dump(scaler, open("../../models/"+model_name+"transformer.pkl", 'wb'))
-    pickle.dump(xgb_model, open(model_name+".pkl", 'wb'))
-    pickle.dump(scaler, open(model_name+"transformer.pkl", 'wb'))
+            import pickle
+            mlflow.log_param("rmse", mean_rmse)
+            mlflow.log_param("params", xgb_model.get_xgb_params())
+
+            print("DONE")
+            pickle.dump(xgb_model, open("../../models/"+model_name+".pkl", 'wb'))
+            pickle.dump(scaler, open("../../models/"+model_name+"transformer.pkl", 'wb'))
+            pickle.dump(xgb_model, open(model_name+".pkl", 'wb'))
+            pickle.dump(scaler, open(model_name+"transformer.pkl", 'wb'))
+            tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+
+            # Model registry does not work with file store
+            if tracking_url_type_store != "file":
+
+                # Register the model
+                # There are other ways to use the Model Registry, which depends on the use case,
+                # please refer to the doc for more information:
+                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+                mlflow.xgboost.log_model(xgb_model, "model", registered_model_name="XGBmodel")
+            else:
+                mlflow.xgboost.log_model(xgb_model, "model")
+    else:
+        import xgboost as xgb
+
+        xgb_model = xgb.XGBRegressor(n_estimators=1000)
+        xgb_model.fit(X_train, y_train,
+                      eval_set=[(X_train, y_train), (X_test, y_test)],
+                      early_stopping_rounds=50,
+                      verbose=False)
+        pred = xgb_model.predict(X_test)
+        ts_results = pd.DataFrame({'Predicted': pred, 'Observed': y_test['Temperature']})
+        ts_results[ts_results['Predicted'] <= 0] = 0
+        ts_results['RMSE'] = np.sqrt((ts_results['Predicted'] - ts_results['Observed']) ** 2)
+        mean_rmse = ts_results['RMSE'].mean()
+
+        logger.info('RMSE:' + str(ts_results['RMSE'].mean()))
+
+        import pickle
+
+        print("DONE")
+        pickle.dump(xgb_model, open("../../models/" + model_name + ".pkl", 'wb'))
+        pickle.dump(scaler, open("../../models/" + model_name + "transformer.pkl", 'wb'))
+        pickle.dump(xgb_model, open(model_name + ".pkl", 'wb'))
+        pickle.dump(scaler, open(model_name + "transformer.pkl", 'wb'))
+
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

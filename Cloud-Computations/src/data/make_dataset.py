@@ -16,9 +16,10 @@ def main(output_filepath, city):
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
+
     all_city_data = load_and_preprocess(city)
     if output_filepath == "default":
-        all_city_data.to_csv("../../data/processed/"+city+".csv")
+        all_city_data.to_csv("./processed/"+city+".csv")
     else:
         all_city_data.to_csv(output_filepath)
         
