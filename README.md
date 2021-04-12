@@ -26,7 +26,7 @@ The objective of this project is to use historical time-series data to predict f
 We form the following 3 hypotheses:
 1. Simple parametric models such as ARIMA will have a lower prediction error than more complicated machine learning or neural network models when given just past temperature patterns as a predictor to forecast future temperatures with (with no exogenous variables) 
 2. Neural Network models will perform best when a large variety of predictors are available, since they are generally more capable of identifying and capturing any hidden variable relationships, when present, that might not be visible to the human eye.
-2. The best explanatory factor for temperature will simply be the most recent available past temperatures.
+3. The best explanatory factor for temperature will simply be the most recent available past temperatures.
 
 
 ## Table of Contents: 
@@ -61,3 +61,7 @@ Results contained within the RNN Daily Aggregation notebook and the Anomaly Dete
     
 **Section 6: Causal Inference** 
 - Causal Inference using DoWhy
+
+## Conclusion and Next Steps 
+
+In conclusion, we proved that the best explanatory variables were indeed past temperature. However, neural networks did not perform best with a large variety of predictors. We did find though, that adding features to the XGBoost model did improve performance a bit. Lastly, the ARIMA model did not outperform XGBoost as we have originally thought. To conclude, the major threats to our model formulation is applying it to different locations, as geographical region can have a large impact on variable interactions. In our next steps, we would like to test the models and explore causal inference for different cities and quantify to what degree having one model for different cities is indeed beneficial. We would also like to explore multi step forecasting for long-range forecasting purposes. 
