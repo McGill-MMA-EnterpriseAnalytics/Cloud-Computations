@@ -47,7 +47,9 @@ We form the following 3 hypotheses:
 - Other Machine Learning Models
     
 **Section 4: Neural Network Models**
+Results contained within the RNN Daily Aggregation notebook and the Anomaly Detection Daily Aggregate notebook. The LSTM and Transformer models are created and tested in RNN Daily Aggregation. Autoencoders and 
 - LSTM
+![LSTM File Sample Output](https://github.com/hoganj15/MMA_Assignment_Data/blob/main/INSY695/Screen%20Shot%202021-04-12%20at%205.54.44%20PM.png)
 - Transformers 
 - Anomaly detection using Autoencoders 
     
