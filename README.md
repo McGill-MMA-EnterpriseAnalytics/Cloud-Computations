@@ -3,7 +3,7 @@
 ## Topic: Weather Prediction: A Case Study on Montreal, Quebec
 
 ### Team Members:
-- Richard Gao -- 
+- Richard Gao -- 260729805
 - Jake Hogan -- 
 - Steven Liang -- 
 - Hanna Swail -- 260746086
