@@ -25,8 +25,10 @@ from urllib.parse import urlparse
 
 cwd = os.getcwd()
 os_type = pf.system()
-mlflow.set_tracking_uri("http://localhost:5000")
-
+try:
+    mlflow.set_tracking_uri("http://localhost:5000")
+except:
+    print("No mlflow")
 
 
 def train_test_split(data, n_test):
@@ -64,9 +66,9 @@ def main(file_name, model_name,mlflow_log):
     ml_df['lag12'] = ml_df['Temperature'].shift(periods=12, fill_value=0)
     ml_df['lag24'] = ml_df['Temperature'].shift(periods=24, fill_value=0)
 
-    ml_df['avg_returns'] = 0
+    ml_df['avg_temp'] = 0
     for i in range(1, len(ml_df)):
-        ml_df['avg_returns'][i] = ml_df['lag1'][:i + 1].mean()
+        ml_df['avg_temp'][i] = ml_df['lag1'][:i + 1].mean()
 
     ml_df.drop('date', axis=1, inplace=True)
 
@@ -80,13 +82,16 @@ def main(file_name, model_name,mlflow_log):
     y_train, y_test = train_test_split(y, split_len)
 
     from sklearn.preprocessing import StandardScaler
-
+    print(X_train)
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
-    X_train = pd.DataFrame(X_train_scaled)
+    X_train = pd.DataFrame(X_train_scaled, columns=X_train.columns)  # X_train_raw.columns?
+    X_train.columns = X.columns
 
     X_test_scaled = scaler.transform(X_test)
-    X_test = pd.DataFrame(X_test_scaled)
+    X_test = pd.DataFrame(X_test_scaled, columns=X_train.columns)  # X_train_raw.columns?
+    X_train.columns = X.columns
+
     if(mlflow_log == "True"):
         with mlflow.start_run():
             import xgboost as xgb
@@ -107,6 +112,9 @@ def main(file_name, model_name,mlflow_log):
             import pickle
             mlflow.log_param("rmse", mean_rmse)
             mlflow.log_param("params", xgb_model.get_xgb_params())
+            divergence = pd.read_csv("../data/Divergence.csv")[['0','1']]
+            divergence.columns = ['P || Q','Q || P']
+            mlflow.log_param("kl_divergence", divergence.to_dict('index'))
 
             print("DONE")
             pickle.dump(xgb_model, open("../../models/"+model_name+".pkl", 'wb'))

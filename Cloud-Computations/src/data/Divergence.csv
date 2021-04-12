@@ -1,0 +1,77 @@
+,0,1,2
+0,0.0,0.0,Description
+1,0.0,0.0,Humidity
+2,0.0,0.0,Wind Direction
+3,0.0,0.0,Temperature
+4,0.0,0.0,Pressure
+5,0.0,0.0,Wind Speed
+6,0.0,0.0,clouds
+7,0.0,0.0,rain
+8,0.0,0.0,mist
+9,0.0,0.0,snow
+10,0.0,0.0,shower
+11,0.0,0.0,thunderstorm
+12,0.0,0.0,fog
+13,0.0,0.0,other
+14,0.0,0.0,Intensity
+15,0.0,0.0,year
+16,0.0,0.0,month
+17,0.0,0.0,day
+18,0.0,0.0,hour
+19,0.0,0.0,minute
+20,0.0,0.0,weekday
+21,0.0,0.0,week
+22,0.0,0.0,quarter
+23,0.0,0.0,month start
+24,0.0,0.0,month end
+25,0.0,0.0,quarter start
+26,0.0,0.0,quarter end
+27,0.0,0.0,lag1
+28,0.0,0.0,lag2
+29,0.0,0.0,lag12
+30,0.0,0.0,lag30
+31,0.0,0.0,max daily temp
+32,0.0,0.0,max daily hum
+33,0.0,0.0,max daily wind speed
+34,0.0,0.0,max daily wind direction
+35,0.0,0.0,max daily pressure
+36,0.0,0.0,max weekly temp
+37,0.0,0.0,max weekly hum
+38,0.0,0.0,max weekly wind speed
+39,0.0,0.0,max weekly wind direction
+40,0.0,0.0,max weekly pressure
+41,0.0,0.0,min daily temp
+42,0.0,0.0,min daily hum
+43,0.0,0.0,min daily wind speed
+44,0.0,0.0,min daily wind direction
+45,0.0,0.0,min daily pressure
+46,0.0,0.0,min weekly temp
+47,0.0,0.0,min weekly hum
+48,0.0,0.0,min weekly wind speed
+49,0.0,0.0,min weekly wind direction
+50,0.0,0.0,min weekly pressure
+51,0.0,0.0,mean daily temp
+52,0.0,0.0,mean daily hum
+53,0.0,0.0,mean daily wind speed
+54,0.0,0.0,mean daily wind direction
+55,0.0,0.0,mean daily pressure
+56,0.0,0.0,mean weekly temp
+57,0.0,0.0,mean weekly hum
+58,0.0,0.0,mean weekly wind speed
+59,0.0,0.0,mean weekly wind direction
+60,0.0,0.0,mean weekly pressure
+61,0.0,0.0,rolling_mean_temp
+62,0.0,0.0,rolling_mean_pressure
+63,0.0,0.0,rolling_mean_wind_dir
+64,0.0,0.0,rolling_mean_wind_speed
+65,0.0,0.0,rolling_mean_humidity
+66,0.0,0.0,rolling_min_temp
+67,0.0,0.0,rolling_min_pressure
+68,0.0,0.0,rolling_min_wind_dir
+69,0.0,0.0,rolling_min_wind_speed
+70,0.0,0.0,rolling_min_humidity
+71,0.0,0.0,rolling_max_temp
+72,0.0,0.0,rolling_max_pressure
+73,0.0,0.0,rolling_max_wind_dir
+74,0.0,0.0,rolling_max_wind_speed
+75,0.0,0.0,rolling_max_humidity

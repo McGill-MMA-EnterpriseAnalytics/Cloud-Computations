@@ -43,7 +43,7 @@ class request_body(BaseModel):
     lag2: float
     lag12: float
     lag24: float
-    avg_returns: float
+    avg_temp: float
 
 # Loading Iris Dataset
 

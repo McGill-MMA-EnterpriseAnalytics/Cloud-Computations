@@ -4,7 +4,7 @@ import logging
 from helper import load_and_preprocess
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
-
+from tests import *
 
 @click.command()
 #@click.argument('input_filepath', type=click.Path(exists=True))
@@ -18,6 +18,18 @@ def main(output_filepath, city):
     logger.info('making final data set from raw data')
 
     all_city_data = load_and_preprocess(city)
+    try:
+        previous_data = pd.read_csv("./processed/"+city+".csv")
+        logger.info("Comparing to past data")
+        # divergence1=kl_divergence(all_city_data, previous_data)
+        # divergence2=kl_divergence(previous_data, all_city_data)
+        # div=pd.DataFrame([divergence1, divergence2])
+        div=pd.DataFrame(kl_divergence_all(all_city_data,previous_data))
+
+        div.to_csv("Divergence.csv")
+    except:
+        logger.info("No past data to compare")
+
     if output_filepath == "default":
         all_city_data.to_csv("./processed/"+city+".csv")
     else:
