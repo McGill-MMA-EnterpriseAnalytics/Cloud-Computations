@@ -4,7 +4,7 @@
 
 ### Team Members:
 - Richard Gao -- 260729805
-- Jake Hogan -- 
+- Jake Hogan -- 260731171
 - Steven Liang -- 
 - Hanna Swail -- 260746086
 - Duncan Wang -- 260710229
