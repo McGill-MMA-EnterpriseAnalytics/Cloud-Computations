@@ -31,12 +31,20 @@ We form the following 3 hypotheses:
 
 
 ## Table of Contents: 
+
 **Section 1: Data Preparation**
+
 **Section 2: Parametric Models**
+
 **Section 3: Machine Learning Models**
+
 **Section 4: Neural Network Models**
+
 **Section 5: AutoML**
+
 **Section 6: Causal Inference** 
+
+## Methods 
 
 ### Section 1: Data Preparation
 - Data extraction 
