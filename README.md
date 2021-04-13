@@ -117,6 +117,35 @@ A variety of Machine Learning models were fit, using both a simple set of featur
 ![Screen Shot 2021-04-13 at 10 14 36 AM](https://user-images.githubusercontent.com/75393332/114567339-24d9e880-9c41-11eb-8500-16fed0d120e0.png)
 
 
+We also used SHAP for feature importance interpretation:
+
+Initial Summary: Lag1 is are most important predictor (consistent with regular feature importance)
+
+![Initial Summary](https://github.com/StevenYML/EnterpriseII/blob/main/SHAP%20Summary%201%20Screenshot%202021-04-13%20143014.png)
+
+Depedence Plots:
+* We see the strong direct linear proportional relationship lag1 and predictions
+
+![dep deplot 1](https://github.com/StevenYML/EnterpriseII/blob/main/SHAP%20Dep%20Plot%201%20Screenshot%202021-04-13%20143014.png)
+
+We can also see where it start to diverge, if we looked at lag12 for instance
+* The relationship is similar but is not as strong
+* There are a lot more outliers
+* Especially with low lag12 temperatures can be associated with a big range of low to high temperature predictions
+
+![dep plot 2](https://github.com/StevenYML/EnterpriseII/blob/main/SHAP%20Dep%20Plot%202%202021-04-13%20143105.png)
+
+Whether we added more or less features, lag1 stayed the #1 predictor.
+
+![SHAP Summary 2](https://github.com/StevenYML/EnterpriseII/blob/main/SHAP%20Summary%202%20Screenshot%202021-04-13%20143014.png)
+![SHAP Summary 3](https://github.com/StevenYML/EnterpriseII/blob/main/SHAP%20Summary%203%20Screenshot%202021-04-13%20143014.png)
+
+
+
+
+
+
+
     
 ### Section 4: Neural Network Models
 
