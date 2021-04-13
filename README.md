@@ -1,3 +1,4 @@
+<img width="959" alt="Screen Shot 2021-04-13 at 9 42 01 AM" src="https://user-images.githubusercontent.com/75393332/114562675-b3983680-9c3c-11eb-9c9b-d040a5b3a413.png">
 # INSY 695 - Enterprise Data Science 
 ## Team: Cloud Computations
 ## Topic: Weather Prediction: A Case Study on Montreal, Quebec
@@ -30,8 +31,14 @@ We form the following 3 hypotheses:
 
 
 ## Table of Contents: 
-
 **Section 1: Data Preparation**
+**Section 2: Parametric Models**
+**Section 3: Machine Learning Models**
+**Section 4: Neural Network Models**
+**Section 5: AutoML**
+**Section 6: Causal Inference** 
+
+### Section 1: Data Preparation
 - Data extraction 
 - Data cleansing & preprocessing
 
@@ -76,19 +83,31 @@ Sample RFE output
 
 
 
-**Section 2: Parametric Models**
+### Section 2: Parametric Models
 - Autoregressive Integrative Moving Average (ARIMA) 
 - Generalized Additive Model 
 
+**Seasonal ARIMA**
+
+A seasonal ARIMA model was built using a process of gridsearch to determine the optimal seasonal and non-seasonal ARIMA Autoregression (A), Integration (I), and Moving Average (MA) parameters required. The simple ARIMA achieved a MAE of 2.57. 
 <img width="969" alt="Screen Shot 2021-04-13 at 9 41 49 AM" src="https://user-images.githubusercontent.com/75393332/114562505-8cda0000-9c3c-11eb-9075-8b5f6b84ab5a.png">
 
+**Generalized Additive Model**
+The Generalized Additive Model was built using Facebook's forecasting tool, Prophet, which achieved an MAE of 3.75. We see this case that ARIMA performs better, as it appears to fit the daily fluctuations better than the GAM model, which generalizes the pattern but misses the ups and downs. We propose this could because GAM uses a sum of smooth functions & a process of backfitting to fit a trend line. 
 
-**Section 3: Machine Learning Models**
-- XGBoost
-- Random Forest
-- Other Machine Learning Models
+<img width="959" alt="Screen Shot 2021-04-13 at 9 42 01 AM" src="https://user-images.githubusercontent.com/75393332/114562687-b7c45400-9c3c-11eb-822a-e623adbf8823.png">
+
+
+### Section 3: Machine Learning Models
+
+A variety of Machine Learning models were fit, using both a simple set of features consisting of different combinations of the lagged past values of temperature and time components, as well as a more complex set of features including humidity, windspeed, and wind direction. We also performed Bayesian hyperparameter optimization using Hyperopt to further tune the models. Overall, XGBoost was best at identifying important predictors and benefited from the information given by a more comprehensive feature set, but hyperparameter tuning had little to no effect on the model. The best XGBoost model with an increased feature set obtained an MAE of 2.42, but the simple XGBoost model performed worse, with an MAE of 2.77. 
+
+
+![Screen Shot 2021-04-13 at 10 13 56 AM](https://user-images.githubusercontent.com/75393332/114567187-fa882b00-9c40-11eb-8437-6b3780c948bb.png)
+
+
     
-**Section 4: Neural Network Models**
+### Section 4: Neural Network Models
 
 Results contained within the RNN Daily Aggregation notebook and the Anomaly Detection Daily Aggregate notebook. The LSTM and Transformer models are created and tested in RNN Daily Aggregation. Autoencoders and anomaly detection are contained within the Anomaly Detection Daily Aggregate notebook.
 - LSTM
@@ -98,12 +117,12 @@ Results contained within the RNN Daily Aggregation notebook and the Anomaly Dete
 - Anomaly detection using Autoencoders 
 ![Anomaly detection sample output](https://github.com/hoganj15/MMA_Assignment_Data/blob/main/INSY695/Screen%20Shot%202021-04-12%20at%206.03.30%20PM.png)
     
-**Section 5: AutoML**
+### Section 5: AutoML
 - AutoML using Ludwig
     
-**Section 6: Causal Inference** 
+### Section 6: Causal Inference
 - Causal Inference using DoWhy
 
 ## Conclusion and Next Steps 
 
-In conclusion, we proved that the best explanatory variables were indeed past temperature. However, neural networks did not perform best with a large variety of predictors. We did find though, that adding features to the XGBoost model did improve performance a bit. Lastly, the ARIMA model did not outperform XGBoost as we have originally thought. To conclude, the major threats to our model formulation is applying it to different locations, as geographical region can have a large impact on variable interactions. In our next steps, we would like to test the models and explore causal inference for different cities and quantify to what degree having multiple models for different cities is indeed beneficial (relative to a single model applied to all). We would also like to explore multi step forecasting for long-range forecasting purposes. 
+In conclusion, we proved that the best explanatory variables were indeed past temperature. However, neural networks did not perform best with a large variety of predictors. We did find though, that adding features to the XGBoost model did improve performance a bit. Lastly, the ARIMA model outperform XGBoost as we had originally thought, with a simple set of features, but XGBoost performed the best overall since it was more easily able to take advantage of a larger set of features. To conclude, the major threats to our model formulation is applying it to different locations, as geographical region can have a large impact on variable interactions. In our next steps, we would like to test the models and explore causal inference for different cities and quantify to what degree having multiple models for different cities is indeed beneficial (relative to a single model applied to all). We would also like to explore multi step forecasting for long-range forecasting purposes. 
