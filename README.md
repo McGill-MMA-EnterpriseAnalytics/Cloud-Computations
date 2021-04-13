@@ -121,11 +121,13 @@ Results contained within the RNN Daily Aggregation notebook and the Anomaly Dete
 ![Anomaly detection sample output](https://github.com/hoganj15/MMA_Assignment_Data/blob/main/INSY695/Screen%20Shot%202021-04-12%20at%206.03.30%20PM.png)
     
 ### Section 5: AutoML
-- AutoML using Ludwig
+
+We also compared our RNN results with an RNN AutoML model built using Ludwig, which obtained a MAE of 2.85. 
+
+![Screen Shot 2021-04-13 at 10 16 18 AM](https://user-images.githubusercontent.com/75393332/114567503-4dfa7900-9c41-11eb-943a-f4700a5ee707.png)
 
 ![Screen Shot 2021-04-13 at 10 15 56 AM](https://user-images.githubusercontent.com/75393332/114567519-50f56980-9c41-11eb-9d54-16d83d553a88.png)
 
-![Screen Shot 2021-04-13 at 10 16 18 AM](https://user-images.githubusercontent.com/75393332/114567503-4dfa7900-9c41-11eb-943a-f4700a5ee707.png)
 
     
 ### Section 6: Causal Inference
