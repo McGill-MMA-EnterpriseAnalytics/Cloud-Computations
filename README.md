@@ -34,8 +34,47 @@ We form the following 3 hypotheses:
 **Section 1: Data Preparation**
 - Data extraction 
 - Data cleansing & preprocessing
+
 - EDA
-- Feature Engineering
+
+Descriptive weather events versus temperature
+
+![Screen Shot 2021-04-12 at 7 43 45 PM](https://user-images.githubusercontent.com/78383866/114478071-78115400-9bcb-11eb-9e16-57f9ea5149a6.png)
+
+Feature histograms broken down by weather events 
+
+![Screen Shot 2021-04-12 at 7 47 38 PM](https://user-images.githubusercontent.com/78383866/114478102-91b29b80-9bcb-11eb-8699-21a107edf0f2.png)
+
+Hourly, monthly, weekly Trend analysis 
+
+![Screen Shot 2021-04-12 at 7 47 15 PM](https://user-images.githubusercontent.com/78383866/114478276-e229f900-9bcb-11eb-8e56-16003af65798.png)
+
+Daily Temperature plot brokwn down by actual, minimum and maximum
+
+![Screen Shot 2021-04-12 at 7 49 54 PM](https://user-images.githubusercontent.com/78383866/114478213-c0307680-9bcb-11eb-8eeb-9991c4456188.png)
+
+- Feature Engineering: 
+    - time point extraction, 
+    - lagged features, 
+    - [max,min,average]X[daily,weekly,monthly]X[temp,humidity,wind direction/speed] from the previous time point
+        - ie. max daily temp, min daily temp, average daily temp, max weekly temp, min weekly temp,...etc
+    - rolling and expanding window
+
+Rolling Window
+
+![Rolling Window Animation](https://cdn.analyticsvidhya.com/wp-content/uploads/2019/11/3hotmk.gif)
+
+Expanding Window
+
+![Expanding Window Animation](https://cdn.analyticsvidhya.com/wp-content/uploads/2019/12/output_B4KHcT.gif)
+
+- Feature Selection using RFE
+
+Sample RFE output
+
+![Screen Shot 2021-04-12 at 8 06 07 PM](https://user-images.githubusercontent.com/78383866/114477888-151fbd00-9bcb-11eb-899d-6ab89ec5ad98.png)
+
+
 
 **Section 2: Parametric Models**
 - Autoregressive Integrative Moving Average (ARIMA) 
@@ -64,4 +103,4 @@ Results contained within the RNN Daily Aggregation notebook and the Anomaly Dete
 
 ## Conclusion and Next Steps 
 
-In conclusion, we proved that the best explanatory variables were indeed past temperature. However, neural networks did not perform best with a large variety of predictors. We did find though, that adding features to the XGBoost model did improve performance a bit. Lastly, the ARIMA model did not outperform XGBoost as we have originally thought. To conclude, the major threats to our model formulation is applying it to different locations, as geographical region can have a large impact on variable interactions. In our next steps, we would like to test the models and explore causal inference for different cities and quantify to what degree having one model for different cities is indeed beneficial. We would also like to explore multi step forecasting for long-range forecasting purposes. 
+In conclusion, we proved that the best explanatory variables were indeed past temperature. However, neural networks did not perform best with a large variety of predictors. We did find though, that adding features to the XGBoost model did improve performance a bit. Lastly, the ARIMA model did not outperform XGBoost as we have originally thought. To conclude, the major threats to our model formulation is applying it to different locations, as geographical region can have a large impact on variable interactions. In our next steps, we would like to test the models and explore causal inference for different cities and quantify to what degree having multiple models for different cities is indeed beneficial (relative to a single model applied to all). We would also like to explore multi step forecasting for long-range forecasting purposes. 
