@@ -293,7 +293,7 @@ lag24=api_df['temp'][api_df.index[len(api_df)-25]]
 avg_returns= sum(api_df['temp'])/len(api_df)
 st.header('** Forecast for the next hour **')
 forecast=json.loads(query_model(select,month,year,lag1,lag2,lag12,lag24,avg_returns).text)['forecast'].replace("[","").replace("]","")
-
+forecast=float(forecast)-273.15
 st.write(forecast)
 
 
