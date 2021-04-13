@@ -80,6 +80,9 @@ Sample RFE output
 - Autoregressive Integrative Moving Average (ARIMA) 
 - Generalized Additive Model 
 
+<img width="969" alt="Screen Shot 2021-04-13 at 9 41 49 AM" src="https://user-images.githubusercontent.com/75393332/114562505-8cda0000-9c3c-11eb-9075-8b5f6b84ab5a.png">
+
+
 **Section 3: Machine Learning Models**
 - XGBoost
 - Random Forest
