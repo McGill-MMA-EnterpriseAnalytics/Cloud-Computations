@@ -308,10 +308,17 @@ def split_multiple(sequence, n_timestamp, target):
         y.append(sequence_y)
     return np.array(X), np.array(y)
 
-def seasons(df):
+def seasons(df): #creates the seasons columns
     df['datetime']= pd.to_datetime(df['datetime'])
     df['season'] = (df['datetime'].dt.month%12 + 3)//3
     seasons = {1: 'Winter',2: 'Spring',3: 'Summer',4: 'Autumn'}
     df['season_name'] = df['season'].map(seasons)
     df = df.drop(['season'],axis=1)
+    return df
+
+def cont_into_cat(df): #makes the continuous variables into categoricals based on quantiles
+    labels = ['low', 'medium', 'high']
+    df['Wind_Speed_Quantiles'] = pd.qcut(df['Wind Speed'], q=3,labels=labels,precision=0)
+    df['Humidity_Quantiles'] = pd.qcut(df['Humidity'], q=3,labels=labels,precision=0)
+    df['Pressure_Quantiles'] = pd.qcut(df['Pressure'], q=3,labels=labels,precision=0)
     return df
