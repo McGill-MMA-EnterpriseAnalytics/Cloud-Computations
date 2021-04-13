@@ -145,7 +145,7 @@ There was a lot of experiemntation with this section as our initial results were
 
 * We have many feature that are engineered. Here we are using what we fed into some of our initial model trial runs, and we see that with causal inference, it's not easy to interpret. While this is the initial test, subsequent test will have to be more narrow in terms of what we want to see and push into DoWhy. We will be choosing our features more carefully and also be more mindful of feature engineering for specific features.
 
-Inital Results
+Inital Results :
 ![Initial Causal Inference Output - Filtered for Significant Features](https://github.com/StevenYML/EnterpriseII/blob/main/Screenshot%202021-04-13%20141922.png)
 
 Final Results - Through careful feature selection and engineering
