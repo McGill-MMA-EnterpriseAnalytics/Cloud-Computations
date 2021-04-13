@@ -116,7 +116,7 @@ A variety of Machine Learning models were fit, using both a simple set of featur
 
 ![Screen Shot 2021-04-13 at 10 14 36 AM](https://user-images.githubusercontent.com/75393332/114567339-24d9e880-9c41-11eb-8500-16fed0d120e0.png)
 
-
+**SHAP Analysis**
 We also used SHAP for feature importance interpretation:
 
 Initial Summary: Lag1 is are most important predictor (consistent with regular feature importance)
