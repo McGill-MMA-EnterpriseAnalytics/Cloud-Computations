@@ -138,10 +138,36 @@ We also compared our RNN results with an RNN AutoML model built using Ludwig, wh
 
 
     
-### Section 6: Causal Inference
-- Causal Inference using DoWhy
+### Section 6: Causal Inference (DoWhy)
+There was a lot of experiemntation with this section as our initial results were pretty strange looking and distorted. We see that overall, there's not that much of an impact at all from our regular features we fed into the ML models. We believe that there are a few issues that are causing this:
+
+* Due to the nature of our project, the data we are working with comes with specific data profiles such as temperature being cyclical and also features such as humidity, windspeed/direction, pressure exist in all types of temperature ranges...leading to a causal result that's near zero.
+
+* We have many feature that are engineered. Here we are using what we fed into some of our initial model trial runs, and we see that with causal inference, it's not easy to interpret. While this is the initial test, subsequent test will have to be more narrow in terms of what we want to see and push into DoWhy. We will be choosing our features more carefully and also be more mindful of feature engineering for specific features.
+
+![Initial Causal Inference Output - Filtered for Significant Features](https://github.com/StevenYML/EnterpriseII/blob/main/Screenshot%202021-04-13%20141922.png)
 
 ![Final Causal Inference Output](https://github.com/StevenYML/EnterpriseII/blob/main/Screenshot%202021-04-13%20141402.png)
+
+These results above look much better in terms of treatment effects on temperature.
+
+* High Pressure = cold vs Low Pressure
+* High Humidity = warmer vs low humidity
+* Wind Speed = no difference high vs low
+
+Other Insights:
+
+* Autume is warmer than spring
+* Winter = cold, Summer = hot
+> * While "Winter = cold, Summer = hot" might seem like a no brainer to us, keep in mind that keep in mind that a computer doesn't know what the concept summer and winter is, and that seeing results that we know are good is not something we should take for granted. If anything it goes back to the trust and transparency topic we covered a while back - seeing obvious results give confidence for other insight the model provides which are good.
+
+Weather Patterns on Temperature:
+
+* Snow is causes with cooler temperatures
+* Thunderstorms cause warmer temperatures
+* Most other weather patterns are on the warm side too.
+
+Which makes sense for precipitation.
 
 ## Conclusion and Next Steps 
 
