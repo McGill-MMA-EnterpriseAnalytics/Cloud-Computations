@@ -1,4 +1,4 @@
-<img width="959" alt="Screen Shot 2021-04-13 at 9 42 01 AM" src="https://user-images.githubusercontent.com/75393332/114562675-b3983680-9c3c-11eb-9c9b-d040a5b3a413.png">
+
 # INSY 695 - Enterprise Data Science 
 ## Team: Cloud Computations
 ## Topic: Weather Prediction: A Case Study on Montreal, Quebec
@@ -106,6 +106,9 @@ A variety of Machine Learning models were fit, using both a simple set of featur
 ![Screen Shot 2021-04-13 at 10 13 56 AM](https://user-images.githubusercontent.com/75393332/114567187-fa882b00-9c40-11eb-8437-6b3780c948bb.png)
 
 
+![Screen Shot 2021-04-13 at 10 14 36 AM](https://user-images.githubusercontent.com/75393332/114567339-24d9e880-9c41-11eb-8500-16fed0d120e0.png)
+
+
     
 ### Section 4: Neural Network Models
 
@@ -119,6 +122,11 @@ Results contained within the RNN Daily Aggregation notebook and the Anomaly Dete
     
 ### Section 5: AutoML
 - AutoML using Ludwig
+
+![Screen Shot 2021-04-13 at 10 15 56 AM](https://user-images.githubusercontent.com/75393332/114567519-50f56980-9c41-11eb-9d54-16d83d553a88.png)
+
+![Screen Shot 2021-04-13 at 10 16 18 AM](https://user-images.githubusercontent.com/75393332/114567503-4dfa7900-9c41-11eb-943a-f4700a5ee707.png)
+
     
 ### Section 6: Causal Inference
 - Causal Inference using DoWhy
