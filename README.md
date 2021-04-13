@@ -141,6 +141,8 @@ We also compared our RNN results with an RNN AutoML model built using Ludwig, wh
 ### Section 6: Causal Inference
 - Causal Inference using DoWhy
 
+![Final Causal Inference Output](https://github.com/StevenYML/EnterpriseII/blob/main/Screenshot%202021-04-13%20141402.png)
+
 ## Conclusion and Next Steps 
 
 In conclusion, we proved that the best explanatory variables were indeed past temperature. However, neural networks did not perform best with a large variety of predictors. We did find though, that adding features to the XGBoost model did improve performance a bit. Lastly, the ARIMA model outperform XGBoost as we had originally thought, with a simple set of features, but XGBoost performed the best overall since it was more easily able to take advantage of a larger set of features. To conclude, the major threats to our model formulation is applying it to different locations, as geographical region can have a large impact on variable interactions. In our next steps, we would like to test the models and explore causal inference for different cities and quantify to what degree having multiple models for different cities is indeed beneficial (relative to a single model applied to all). We would also like to explore multi step forecasting for long-range forecasting purposes. 
