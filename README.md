@@ -49,6 +49,9 @@ We form the following 3 hypotheses:
 - [Machine Learning Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_MLModels.ipynb) 
 - [AutoML Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_AutoMLModels.ipynb)
 - [Causal Inference](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Causal%20Inference.ipynb)
+- [Presentation Deck](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/tree/main/Powerpoints)
+
+
 
 ## Data Source
 
