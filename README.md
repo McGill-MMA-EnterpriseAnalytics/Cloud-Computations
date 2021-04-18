@@ -44,6 +44,7 @@ We form the following 3 hypotheses:
 
 **Section 6: Causal Inference** 
 
+**Section 7: Deployment**
 ## Important Notebooks: 
 - [Parametric Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_ParametricModels.ipynb) 
 - [Machine Learning Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_MLModels.ipynb) 
@@ -220,6 +221,19 @@ Weather Patterns on Temperature:
 * Most other weather patterns are on the warm side too.
 
 Which makes sense for precipitation.
+
+### **Section 7: Deployment** 
+
+We created a dashboard that queries the fastapi (localhost:8000)
+<img src="/images/dashboard.png" width="1000" height="700"/>
+We created a fastapi, it is also hosted on AWS ECR/ECS
+<img src="/images/fastapi.png" width="1000" height="700"/>
+We tracked or model every time it was built
+<img src="/images/mlflow.png" width="1000" height="700"/>
+
+You can run the deploy.sh script in order to generate a docker image. Our use our Jenkins file to build a CI/CD pipeline.
+
+
 
 ## Conclusion and Next Steps 
 
