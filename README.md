@@ -44,11 +44,19 @@ We form the following 3 hypotheses:
 
 **Section 6: Causal Inference** 
 
-**Important Notebooks**:
+**Section 7: Deployment**
+## Important Notebooks: 
 - [Parametric Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_ParametricModels.ipynb) 
 - [Machine Learning Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_MLModels.ipynb) 
 - [AutoML Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_AutoMLModels.ipynb)
 - [Causal Inference](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Causal%20Inference.ipynb)
+- [Presentation Deck](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/tree/main/Powerpoints)
+- [RNN Daily Aggregation](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb)
+- [Anomaly Detection Daily Aggregate](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb)
+- [EDA](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/EDA.ipynb)
+- [Feature Engineering](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Feature%20Engineering1.ipynb)
+
+
 
 ## Data Source
 
@@ -159,7 +167,7 @@ Whether we added more or less features, lag1 stayed the #1 predictor.
     
 ### Section 4: Neural Network Models
 
-Results contained within the ![RNN Daily Aggregation notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb) and the ![Anomaly Detection Daily Aggregate notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb). The LSTM and Transformer models are created and tested in RNN Daily Aggregation. Autoencoders and anomaly detection are contained within the Anomaly Detection Daily Aggregate notebook.
+Results contained within the [RNN Daily Aggregation notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb) and the [Anomaly Detection Daily Aggregate notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb). The LSTM and Transformer models are created and tested in RNN Daily Aggregation. Autoencoders and anomaly detection are contained within the Anomaly Detection Daily Aggregate notebook.
 - LSTM
 ![LSTM model sample output](https://github.com/hoganj15/MMA_Assignment_Data/blob/main/INSY695/Screen%20Shot%202021-04-12%20at%205.54.44%20PM.png)
 - Transformers 
@@ -213,6 +221,19 @@ Weather Patterns on Temperature:
 * Most other weather patterns are on the warm side too.
 
 Which makes sense for precipitation.
+
+### **Section 7: Deployment** 
+
+
+We created a dashboard that queries the fastapi (localhost:8000)
+
+<img src="/images/dashboard.png" width="500" height="500"/>
+We created a fastapi, everytime our dockerfile is run, it is packaged as a docker container and is hosted on AWS ECR/ECS. You can also run using uvicorn after installing the requirements.txt. The contents are stored in Cloud-Computations folder under the src folder.
+<img src="/images/fastapi.png" width="1000" height="700"/>
+We tracked or model every time it was built. You can run using the command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 
+<img src="/images/mlflow.png" width="800" height="500"/>
+
+You can run the deploy.sh script in order to generate a docker image. Our use our Jenkins file to build a CI/CD pipeline.
 
 ## Conclusion and Next Steps 
 
