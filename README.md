@@ -44,7 +44,7 @@ We form the following 3 hypotheses:
 
 **Section 6: Causal Inference** 
 
-**Important Notebooks**:
+## Important Notebooks
 - [Parametric Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_ParametricModels.ipynb) 
 - [Machine Learning Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_MLModels.ipynb) 
 - [AutoML Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_AutoMLModels.ipynb)
