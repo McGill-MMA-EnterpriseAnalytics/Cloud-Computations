@@ -1,5 +1,6 @@
 #import libraries
 import pandas as pd
+import numpy as np
 import requests
 from io import StringIO
 import ssl
@@ -10,6 +11,9 @@ import os
 from pandas import json_normalize 
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
+from datetime import datetime
+from sklearn.feature_selection import RFE
+from sklearn.tree import DecisionTreeRegressor
     
 ssl._create_default_https_context = ssl._create_unverified_context
 def load_csv(url):
@@ -79,7 +83,7 @@ def impute(df):
 
   return df
 
-#NEW - preprocessing for the description weather column
+#NEW - preprocessing for the description weather column - from Steven
 def clean_description(df):
     #too much detail, simplifying a bit and cleaning/standarizing word notation
     df['Description'] = df['Description'].str.replace(' with ', ' ')
@@ -124,3 +128,181 @@ def clean_description(df):
     
     return df
 
+def feature_engineer(df): #implementing Hanna's features in a function
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    df['year'] = df['datetime'].dt.year
+    df['month'] = df['datetime'].dt.month
+    df['day'] = df['datetime'].dt.day
+    df['hour'] = df['datetime'].dt.hour
+    df['minute'] = df['datetime'].dt.minute
+    df['weekday'] = df['datetime'].dt.weekday
+    df['week'] = df['datetime'].dt.weekofyear
+    df['quarter'] = df['datetime'].dt.quarter
+    df['month start'] = df['datetime'].dt.is_month_start
+    df['month end'] = df['datetime'].dt.is_month_end
+    df['quarter start'] = df['datetime'].dt.is_quarter_start
+    df['quarter end'] = df['datetime'].dt.is_quarter_end
+
+    #lag features from Duncan
+    df = df.set_index('datetime')
+    df['lag1'] = df['Temperature'].shift(periods = 1, fill_value = 0)
+    df['lag2'] = df['Temperature'].shift(periods = 2, fill_value = 0)
+    df['lag12'] = df['Temperature'].shift(periods = 12, fill_value = 0)
+    df['lag30'] = df['Temperature'].shift(periods = 30, fill_value = 0)
+
+    #we have to eliminate all those with 0s
+    df = df[df['lag30'] != 0]
+
+    df['max daily temp']=df.resample('D')['Temperature'].transform('max')
+    df['max daily temp']=df['max daily temp'].shift(24)
+    df['max daily hum']=df.resample('D')['Humidity'].transform('max')
+    df['max daily hum']=df['max daily hum'].shift(24)
+    df['max daily wind speed']=df.resample('D')['Wind Speed'].transform('max')
+    df['max daily wind speed']=df['max daily wind speed'].shift(24)
+    df['max daily wind direction']=df.resample('D')['Wind Direction'].transform('max')
+    df['max daily wind direction']=df['max daily wind direction'].shift(24)
+    df['max daily pressure']=df.resample('D')['Pressure'].transform('max')
+    df['max daily pressure']=df['max daily pressure'].shift(24)
+
+    df['max weekly temp']=df.resample('W')['Temperature'].transform('max')
+    df['max weekly temp']=df['max weekly temp'].shift(168)
+    df['max weekly hum']=df.resample('W')['Humidity'].transform('max')
+    df['max weekly hum']=df['max weekly hum'].shift(168)
+    df['max weekly wind speed']=df.resample('W')['Wind Speed'].transform('max')
+    df['max weekly wind speed']=df['max weekly wind speed'].shift(168)
+    df['max weekly wind direction']=df.resample('W')['Wind Direction'].transform('max')
+    df['max weekly wind direction']=df['max weekly wind direction'].shift(168)
+    df['max weekly pressure']=df.resample('W')['Pressure'].transform('max')
+    df['max weekly pressure']=df['max weekly pressure'].shift(168)
+
+    df['min daily temp']=df.resample('D')['Temperature'].transform('min')
+    df['min daily temp']=df['min daily temp'].shift(24)
+    df['min daily hum']=df.resample('D')['Humidity'].transform('min')
+    df['min daily hum']=df['min daily temp'].shift(24)
+    df['min daily wind speed']=df.resample('D')['Wind Speed'].transform('min')
+    df['min daily wind speed']=df['min daily temp'].shift(24)
+    df['min daily wind direction']=df.resample('D')['Wind Direction'].transform('min')
+    df['min daily wind direction']=df['min daily temp'].shift(24)
+    df['min daily pressure']=df.resample('D')['Pressure'].transform('min')
+    df['min daily pressure']=df['min daily temp'].shift(24)
+
+
+    df['min weekly temp']=df.resample('W')['Temperature'].transform('min')
+    df['min weekly temp']=df['min weekly temp'].shift(168)
+    df['min weekly hum']=df.resample('W')['Humidity'].transform('min')
+    df['min weekly hum']=df['min weekly hum'].shift(168)
+    df['min weekly wind speed']=df.resample('W')['Wind Speed'].transform('min')
+    df['min weekly wind speed']=df['min weekly wind speed'].shift(168)
+    df['min weekly wind direction']=df.resample('W')['Wind Direction'].transform('min')
+    df['min weekly wind direction']=df['min weekly wind direction'].shift(168)
+    df['min weekly pressure']=df.resample('W')['Pressure'].transform('min')
+    df['min weekly pressure']=df['min weekly pressure'].shift(168)
+
+    df['mean daily temp']=df.resample('D')['Temperature'].transform('max')
+    df['mean daily temp']=df['mean daily temp'].shift(24)
+    df['mean daily hum']=df.resample('D')['Humidity'].transform('max')
+    df['mean daily hum']=df['mean daily hum'].shift(24)
+    df['mean daily wind speed']=df.resample('D')['Wind Speed'].transform('max')
+    df['mean daily wind speed']=df['mean daily wind speed'].shift(24)
+    df['mean daily wind direction']=df.resample('D')['Wind Direction'].transform('max')
+    df['mean daily wind direction']=df['mean daily wind direction'].shift(24)
+    df['mean daily pressure']=df.resample('D')['Pressure'].transform('max')
+    df['mean daily pressure']=df['mean daily pressure'].shift(24)
+
+    df['mean weekly temp']=df.resample('W')['Temperature'].transform('mean')
+    df['mean weekly temp']=df['mean weekly temp'].shift(168)
+    df['mean weekly hum']=df.resample('W')['Humidity'].transform('mean')
+    df['mean weekly hum']=df['mean weekly hum'].shift(168)
+    df['mean weekly wind speed']=df.resample('W')['Wind Speed'].transform('mean')
+    df['mean weekly wind speed']=df['mean weekly wind speed'].shift(168)
+    df['mean weekly wind direction']=df.resample('W')['Wind Direction'].transform('mean')
+    df['mean weekly wind direction']=df['mean weekly wind direction'].shift(168)
+    df['mean weekly pressure']=df.resample('W')['Pressure'].transform('mean')
+    df['mean weekly pressure']=df['mean weekly pressure'].shift(168)
+
+    df['rolling_mean_temp'] = df['Temperature'].rolling(window=24).mean()
+    df['rolling_mean_pressure'] = df['Pressure'].rolling(window=24).mean()
+    df['rolling_mean_wind_dir'] = df['Wind Direction'].rolling(window=24).mean()
+    df['rolling_mean_wind_speed'] = df['Wind Speed'].rolling(window=24).mean()
+    df['rolling_mean_humidity'] = df['Humidity'].rolling(window=24).mean()
+
+    df['rolling_min_temp'] = df['Temperature'].rolling(window=24).min()
+    df['rolling_min_pressure'] = df['Pressure'].rolling(window=24).min()
+    df['rolling_min_wind_dir'] = df['Wind Direction'].rolling(window=24).min()
+    df['rolling_min_wind_speed'] = df['Wind Speed'].rolling(window=24).min()
+    df['rolling_min_humidity'] = df['Humidity'].rolling(window=24).min()
+
+    df['rolling_max_temp'] = df['Temperature'].rolling(window=24).max()
+    df['rolling_max_pressure'] = df['Pressure'].rolling(window=24).max()
+    df['rolling_max_wind_dir'] = df['Wind Direction'].rolling(window=24).max()
+    df['rolling_max_wind_speed'] = df['Wind Speed'].rolling(window=24).max()
+    df['rolling_max_humidity'] = df['Humidity'].rolling(window=24).max()
+
+    df['rolling_mean_temp'] = df['Temperature'].expanding(2).mean()
+    df['rolling_mean_pressure'] = df['Pressure'].expanding(2).mean()
+    df['rolling_mean_wind_dir'] = df['Wind Direction'].expanding(2).mean()
+    df['rolling_mean_wind_speed'] = df['Wind Speed'].expanding(2).mean()
+    df['rolling_mean_humidity'] = df['Humidity'].expanding(2).mean()
+
+    df['rolling_min_temp'] = df['Temperature'].expanding(2).min()
+    df['rolling_min_pressure'] = df['Pressure'].expanding(2).min()
+    df['rolling_min_wind_dir'] = df['Wind Direction'].expanding(2).min()
+    df['rolling_min_wind_speed'] = df['Wind Speed'].expanding(2).min()
+    df['rolling_min_humidity'] = df['Humidity'].expanding(2).min()
+
+    df['rolling_max_temp'] = df['Temperature'].expanding(2).max()
+    df['rolling_max_pressure'] = df['Pressure'].expanding(2).max()
+    df['rolling_max_wind_dir'] = df['Wind Direction'].expanding(2).max()
+    df['rolling_max_wind_speed'] = df['Wind Speed'].expanding(2).max()
+    df['rolling_max_humidity'] = df['Humidity'].expanding(2).max()
+    
+    return(df)
+
+def feature_engineer_important(df):
+    df = feature_engineer(df) #create new features using above
+    
+    df = df.dropna()
+    # split into input and output
+    X = df.drop('Temperature',axis=1)
+    X = X.drop('Description',axis=1)
+    y = df['Temperature']
+    
+    # perform feature selection
+    rfe = RFE(DecisionTreeRegressor(random_state=1), n_features_to_select=20)
+    fit = rfe.fit(X, y)
+    
+    important_features = []
+    names = X.columns
+    for i in range(len(fit.support_)):
+        if fit.support_[i]:
+            important_features.append((names[i]))
+    
+    df = df[important_features+['Temperature']] #only return the top 15 most important features
+    
+    return(df)
+
+
+def split(sequence, n_timestamp):
+    X, y = [], []
+    
+    for i in range(len(sequence)):
+        end = i + n_timestamp
+        if end > len(sequence)-1:
+            break
+        sequence_x, sequence_y = sequence[i:end], sequence[end]
+        X.append(sequence_x)
+        y.append(sequence_y)
+    return np.array(X), np.array(y)
+
+
+def split_multiple(sequence, n_timestamp, target):
+    X, y = [], []
+    
+    for i in range(len(sequence)):
+        end = i + n_timestamp
+        if end > len(sequence)-1:
+            break
+        sequence_x, sequence_y = sequence[i:end], target[end]
+        X.append(sequence_x)
+        y.append(sequence_y)
+    return np.array(X), np.array(y)

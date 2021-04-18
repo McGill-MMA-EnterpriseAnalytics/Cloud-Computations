@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/Rgao/Desktop/MMA3/Enterprise/Final/Cloud-Computations/src/models/mlruns/0/7330651f03f64a1ca5102b48acecb0ab/artifacts
+end_time: 1618089328867
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 7330651f03f64a1ca5102b48acecb0ab
+run_uuid: 7330651f03f64a1ca5102b48acecb0ab
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1618089325900
+status: 3
+tags: []
+user_id: Rgao
