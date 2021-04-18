@@ -52,6 +52,8 @@ We form the following 3 hypotheses:
 - [Presentation Deck](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/tree/main/Powerpoints)
 - [RNN Daily Aggregation](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb)
 - [Anomaly Detection Daily Aggregate](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb)
+- [EDA](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/EDA.ipynb)
+- [Feature Engineering](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Feature%20Engineering1.ipynb)
 
 
 
