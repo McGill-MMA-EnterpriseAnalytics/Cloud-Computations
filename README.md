@@ -226,6 +226,7 @@ Which makes sense for precipitation.
 
 
 We created a dashboard that queries the fastapi (localhost:8000)
+
 <img src="/images/dashboard.png" width="500" height="500"/>
 We created a fastapi, everytime our dockerfile is run, it is packaged as a docker container and is hosted on AWS ECR/ECS. You can also run using uvicorn after installing the requirements.txt. The contents are stored in Cloud-Computations folder under the src folder.
 <img src="/images/fastapi.png" width="1000" height="700"/>
