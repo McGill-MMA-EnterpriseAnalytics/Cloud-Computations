@@ -8,7 +8,6 @@ pipeline{
                 branch 'Docker'
             }
             steps {
-                python ./Cloud-Computations/Unit_tests/tests.py
                 sh 'test_deploy.sh'
 
             }
