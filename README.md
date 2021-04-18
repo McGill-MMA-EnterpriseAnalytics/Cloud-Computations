@@ -233,7 +233,7 @@ We created a fastapi, everytime our dockerfile is run, it is packaged as a docke
 We tracked or model every time it was built. You can run using the command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 
 <img src="/images/mlflow.png" width="800" height="500"/>
 
-You can run the deploy.sh script in order to generate a docker image. Our use our Jenkins file to build a CI/CD pipeline.
+You can run the deploy.sh script in order to generate a docker image for the fastapi. Or use our Jenkins file to build a CI/CD pipeline. To run the docker image run the following after building: docker run -p 8000:8000 --name my-api test. 
 
 ## Conclusion and Next Steps 
 
