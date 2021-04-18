@@ -224,16 +224,15 @@ Which makes sense for precipitation.
 
 ### **Section 7: Deployment** 
 
+
 We created a dashboard that queries the fastapi (localhost:8000)
-<img src="/images/dashboard.png" width="1000" height="700"/>
-We created a fastapi, it is also hosted on AWS ECR/ECS
+<img src="/images/dashboard.png" width="1000" height="500"/>
+We created a fastapi, it is packaged as a docker container and is hosted on AWS ECR/ECS. You can also run using uvicorn after installing the requirements.txt.
 <img src="/images/fastapi.png" width="1000" height="700"/>
-We tracked or model every time it was built
+We tracked or model every time it was built. You can run using the command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 
 <img src="/images/mlflow.png" width="1000" height="700"/>
 
 You can run the deploy.sh script in order to generate a docker image. Our use our Jenkins file to build a CI/CD pipeline.
-
-
 
 ## Conclusion and Next Steps 
 
