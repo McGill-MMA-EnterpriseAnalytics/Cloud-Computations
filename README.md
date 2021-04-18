@@ -50,6 +50,8 @@ We form the following 3 hypotheses:
 - [AutoML Models](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/INSY695_AutoMLModels.ipynb)
 - [Causal Inference](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Causal%20Inference.ipynb)
 - [Presentation Deck](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/tree/main/Powerpoints)
+- [RNN Daily Aggregation](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb)
+- [Anomaly Detection Daily Aggregate](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb)
 
 
 
@@ -162,7 +164,7 @@ Whether we added more or less features, lag1 stayed the #1 predictor.
     
 ### Section 4: Neural Network Models
 
-Results contained within the ![RNN Daily Aggregation notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb) and the ![Anomaly Detection Daily Aggregate notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb). The LSTM and Transformer models are created and tested in RNN Daily Aggregation. Autoencoders and anomaly detection are contained within the Anomaly Detection Daily Aggregate notebook.
+Results contained within the [RNN Daily Aggregation notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/RNN%20Daily%20Aggregation.ipynb) and the [Anomaly Detection Daily Aggregate notebook](https://github.com/McGill-MMA-EnterpriseAnalytics/Cloud-Computations/blob/Features/Anomaly%20Detection%20Daily%20Aggregate.ipynb). The LSTM and Transformer models are created and tested in RNN Daily Aggregation. Autoencoders and anomaly detection are contained within the Anomaly Detection Daily Aggregate notebook.
 - LSTM
 ![LSTM model sample output](https://github.com/hoganj15/MMA_Assignment_Data/blob/main/INSY695/Screen%20Shot%202021-04-12%20at%205.54.44%20PM.png)
 - Transformers 
