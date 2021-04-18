@@ -46,7 +46,7 @@ We form the following 3 hypotheses:
 
 ## Data Source
 
-[!Access the data here] (https://www.kaggle.com/selfishgene/historical-hourly-weather-data) 
+![Access the data here](https://www.kaggle.com/selfishgene/historical-hourly-weather-data) 
 
 ## Methods 
 
