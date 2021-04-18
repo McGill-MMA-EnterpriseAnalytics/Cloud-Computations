@@ -44,6 +44,10 @@ We form the following 3 hypotheses:
 
 **Section 6: Causal Inference** 
 
+## Data Source
+
+[!Access the data here] (https://www.kaggle.com/selfishgene/historical-hourly-weather-data) 
+
 ## Methods 
 
 ### Section 1: Data Preparation
